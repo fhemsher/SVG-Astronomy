@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+<meta charset=utf-8 />
+<style type="text/css">
+<!--
+body {
+-moz-box-shadow: 4px 4px 5px #888;
+-webkit-box-shadow: 4px 4px 5px #888;
+box-shadow: 4px 4px 5px #888;
+}
+-->
+</style>
+</head>
+<body   onload= writePathColorSelection();writePathMarkerOptions();sendSize()  style='border-radius:10px;border:2px solid lightblue;background-color:transparent;padding:0;margin:0;font-family:arial'>
+<div id=containerDiv>
+<table  id=topTable style='background-color:linen;padding:3px;width:100%;'><tr><td style='width:80%;' align=center> <span id=editSpan>Add</span> Path&nbsp; <span id=rightAngleSpan><b>L</b>:<input title="right angle path" type=checkbox id=drawPathRightAngleCheck />[L]</span>
+</td><td style='width:20%' align=right><button  onClick=parent.closeIframe("addElemPath");parent.closeDrawPath()>X</button>[X]</td></tr></table>
+<table  style=border-radius:10px;width:100%;background-color:gainsboro>
+
+
+<tr style=background-color:linen>
+<td align=center >Stroke <span id=drawPathStrokeBg >Color:</span>
+<select  title="Stroke Color" onChange=parent.showDrawPathStrokeBg() id=drawPathStrokeSelect></select>
+width:
+  <select onChange=parent.drawPathStrokeWidthSelected() id=drawPathStrokeWidthSelect>
+		<option title="none" >0</option>
+		<option >0.5</option>
+		<option >1</option>
+		<option >1.5</option>
+		<option selected>2</option>
+		<option >2.5</option>
+		<option >3</option>
+		<option >4</option>
+		<option >5</option>
+		<option >6</option>
+		<option >7</option>
+		<option >8</option>
+		<option >9</option>
+		<option >10</option>
+		<option >15</option>
+		<option >20</option>
+		<option >25</option>
+		<option >30</option>
+		<option >35</option>
+		<option >40</option>
+		<option >45</option>
+		<option >50</option>
+	</select> <br>
+ Stroke Opacity:
+  <select onChange=parent.drawPathStrokeOpacitySelected() id=drawPathStrokeOpacitySelect>
+		<option >0.1</option>
+		<option>0.2</option>
+		<option >0.3</option>
+		<option >0.4</option>
+		<option>0.5</option>
+		<option >0.6</option>
+		<option >0.7</option>
+		<option >0.8</option>
+		<option >0.9</option>
+		<option  selected >1.0</option>
+    </select> <br>
+
+Dash[D]:<input type=checkbox id=drawPathStrokeDashCheck onClick=parent.drawPathStrokeDashChecked() />
+&nbsp;Arrow[A]:<input type=checkbox id=drawPathStrokeArrowCheck onClick=parent.drawPathStrokeArrowChecked() />
+&nbsp;Shadow:<input type=checkbox id=drawPathShadowCheck onClick=parent.drawPathShadowChecked() />
+
+</td>
+</tr>
+<tr style=background-color:linen>
+<td align=center >
+Path Zone Markers: <input title="Add markers along path" type="checkbox" id=pathZoneMarkerCheck onClick=parent.pathZoneMarkerChecked() />
+<div id=pathZoneMarkerDiv style=visibility:hidden>
+ 	Marker <span id=pathZoneMarkerFillBg >Color:</span>
+		<select  onChange=parent.pathZoneMarkerFillColorSelected()  id=pathZoneMarkerFillColorSelect><option title="none" >0</option></select><br>
+ # of Markers:<select id=pathZoneMarkerQuantitySelect onchange=parent.pathZoneMarkerQuantitySelected()  >
+ <option>5</option>
+ <option>10</option>
+ <option>15</option>
+ <option>20</option>
+ <option>25</option>
+ <option>30</option>
+ <option>40</option>
+ <option selected >50</option>
+ <option>60</option>
+ <option>80</option>
+ <option>100</option>
+
+ </select>
+ Size: <select id=pathZoneMarkerFontSizeSelect onchange=parent.pathZoneMarkerFontSizeSelected()  >
+  <option>5</option>
+  <option>10</option>
+  <option selected>15</option>
+ <option>20</option>
+  <option>25</option>
+  <option>30</option>
+
+ </select><br>
+Choose Marker: <select name="" id="pathZoneMarkerSelect" onChange=parent.pathZoneMarkerSelected()>
+ <option >Marker</option></select>
+
+    </div>
+
+
+</td></tr>
+<tr style=background-color:linen>
+<td align=center >
+3D Stroke:<input type="checkbox" id=drawPathPipe3DCheck onClick=parent.drawPathPipe3DChecked() />
+
+</td>
+</tr>
+<tr style=background-color:linen>
+<td align=center >Fill <span id=drawPathFillBg >Color:</span>
+<select  title="Fill Color" onChange=parent.showDrawPathFillBg() id=drawPathFillSelect></select>
+Opacity:
+  <select onChange=parent.drawPathOpacitySelected() id=drawPathOpacitySelect>
+		<option >0.1</option>
+		<option>0.2</option>
+		<option >0.3</option>
+		<option >0.4</option>
+		<option>0.5</option>
+		<option >0.6</option>
+		<option >0.7</option>
+		<option >0.8</option>
+		<option >0.9</option>
+		<option  selected >1.0</option>
+
+		</select>
+
+</td>
+</tr>
+<tr style=background-color:linen align=center>
+	<td>
+	<span id=drawPathTopButtons>
+		<button disabled id=drawPathPauseButton onClick=pauseDrawPathLocal()>pause[P]</button>
+		<button disabled id=drawPathUndoButton onClick=parent.undoDrawPath()>undo[U]</button>
+		<button id=drawPathEncloseButton disabled onClick=parent.encloseDrawPath()>enclose[E]</button>
+		<button id=smoothPathButton style='width:75px;' disabled onClick=parent.drawPathSmoothSelected()>smooth[S]</button>
+    </span>
+	</td>
+</tr>
+
+
+
+<tr style=background-color:linen align=center>
+<td>
+	<button id=drawPathCancelButton disabled title='cancel/remove this path' onClick=parent.cancelDrawPath()>cancel[C]</button>
+<button id=drawPathFinishButton disabled onClick=parent.finishDrawPath()>finish[F]</button>
+
+
+
+</td>
+</tr>
+
+
+
+<tr><td style=background-color:linen  align=center>[key]- Keyboard shortcut key</td></tr>
+</table>
+</div>
+
+<div style=position:absolute;top:0px;left:0px;visibility:hidden >
+<svg id=sizerSVG width=1 height=1 overflow="visible" ></svg>
+</div>
+
+</body>
+<script>
+
+function pauseDrawPathLocal()
+{
+	if(parent.PrevKeyPath==112)
+	{
+		parent.unPauseDrawPath()
+        parent.PrevKeyPath=null
+	}
+	else
+	{
+      	parent.pauseDrawPath()
+       	parent.PrevKeyPath=112
+	}
+}
+
+/*
+function writePathColorSelection()
+{
+   var DrawColors=parent.clrArray
+	for(var k=0;k<DrawColors.length;k++)
+	{
+		var name=DrawColors[k][0]
+		var myColor=DrawColors[k][1]
+		var option=document.createElement("OPTION")
+		option.style.backgroundColor=myColor
+		option.value=myColor
+		option.title=name+" "+myColor
+
+		option.text=k
+
+
+		var option=document.createElement("OPTION")
+		option.style.backgroundColor=myColor
+		option.value=myColor
+		option.title=name+" "+myColor
+
+		option.text=k
+        drawPathStrokeSelect.appendChild(option)
+
+	}
+	drawPathStrokeSelect.selectedIndex=23
+	var clr=drawPathStrokeSelect.options[drawPathStrokeSelect.selectedIndex].value
+	drawPathStrokeBg.style.backgroundColor=clr
+}
+*/
+function writePathColorSelection()
+{
+   var DrawColors=parent.clrArray
+	for(var k=0;k<DrawColors.length;k++)
+	{
+		var name=DrawColors[k][0]
+		var myColor=DrawColors[k][1]
+		var option=document.createElement("OPTION")
+		option.style.backgroundColor=myColor
+		option.value=myColor
+		option.title=name+" "+myColor
+
+		option.text=k
+        pathZoneMarkerFillColorSelect.appendChild(option)
+
+		var option=document.createElement("OPTION")
+		option.style.backgroundColor=myColor
+		option.value=myColor
+		option.title=name+" "+myColor
+
+		option.text=k
+        drawPathStrokeSelect.appendChild(option)
+
+       	var option=document.createElement("OPTION")
+		option.style.backgroundColor=myColor
+		option.value=myColor
+		option.title=name+" "+myColor
+		option.text=k
+
+
+		var option=document.createElement("OPTION")
+		option.style.backgroundColor=myColor
+		option.value=myColor
+		option.title=name+" "+myColor
+
+		option.text=k
+        drawPathFillSelect.appendChild(option)
+
+
+
+
+	}
+	drawPathStrokeSelect.selectedIndex=44
+	var clr=drawPathStrokeSelect.options[drawPathStrokeSelect.selectedIndex].value
+	drawPathStrokeBg.style.backgroundColor=clr
+
+     	pathZoneMarkerFillColorSelect.selectedIndex=7
+	var clr=pathZoneMarkerFillColorSelect.options[pathZoneMarkerFillColorSelect.selectedIndex].value
+	pathZoneMarkerFillBg.style.backgroundColor=clr
+
+
+
+
+}
+
+
+function sendSize()
+{
+	window.name = 'drawPathWindow';
+   var width=containerDiv.scrollWidth+10
+   var height=containerDiv.scrollHeight+10
+   parent.sizeFrame('addElemPath',width,height)
+   parent.startPathDraw()
+
+
+}
+
+//////////////////===============path markers=============================
+
+var markerArray =["25A0", "25A3", "25A4", "25A5", "25A6", "25A7", "25A8", "25A9", "25B0",  "25B2", "25B3",   "25C6", "25C7", "25C8", "25C9",  "25CD", "25CE", "25CF", "25D0", "25D1", "25D2", "25D3",   "25D8", "25D9",  "25E7", "25E8", "25E9", "25EA", "25EB", "25EC", "25ED", "25EE",  "25FB", "25FC", "2BC1", "2BC2", "2BC3", "2BC4", "2BC5", "2BC6",    "2BCC", "2BCD", "2BCE", "2BCF", "2BD0"]
+  //marker-pattern="40 url(#myMarker)" disatnce and marker----
+function writePathMarkerOptions()
+{
+    //var fontSize = 30
+    //var strokeFactor = .02
+    //var strokeWidth = strokeFactor*fontSize
+
+   // var svg = d3.select("#sizerSVG")
+    for(var k = 0; k<markerArray.length; k++)
+    {
+
+        var unicode = markerArray[k]
+        //IconUnicode.push(unicode)
+        var code = parseInt(unicode, 16)
+        /*
+        var icon = svg.append("text")
+        .attr("id", "icon_"+unicode)
+        .attr("font-size", fontSize)
+        .attr("font-family", "Arial Unicode MS")
+        .attr("stroke-width", strokeWidth)
+        .attr("fill", "red")
+        .attr("stroke", "black")
+        .text(String.fromCharCode(code))
+
+        var sizeMe = document.getElementById("icon_"+unicode)
+        var bb = sizeMe.getBBox()
+        var centerX = bb.x+.5*bb.width
+        var centerY = bb.y+.5*bb.height
+
+        icon.attr("centerX", centerX)
+        icon.attr("centerY", centerY)
+         */
+          var option=document.createElement("option")
+          option.style.fontSize="25px"
+          option.value=unicode
+          option.title=unicode
+          option.text=String.fromCharCode(code)
+          pathZoneMarkerSelect.appendChild(option)
+         }
+}
+
+
+</script>
+</html>
