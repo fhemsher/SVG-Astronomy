@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+  <title>Electric Component Sizing</title>
+</head>
+
+<body onload=sizeSvg() STYLE=FONT-FAMILY:ARIAL>
+<center>
+    <div style='width:400px;height:400px;background:lightgreen'>
+    <svg id=mySVG width=400 height=400>
+    <svg id=Wrapper />
+    </svg>
+
+     </div>
+</center>
+
+<script>
+function sizeSvg()
+{
+  var file="ElectricComponents.svg"
+  var loadXML = new XMLHttpRequest;
+	loadXML.onload = callback;
+	loadXML.open("GET", file, true);
+	loadXML.send();
+	function callback()
+	{
+		//---responseText---
+		var xmlString=loadXML.responseText
+
+		//---DOMParser---
+		var parser = new DOMParser();
+		var Doc=parser.parseFromString(xmlString,"text/xml").documentElement;
+
+    var nodes=Doc.childNodes
+    for(var k=0;k<nodes.length;k++)
+    {
+
+     var node=nodes.item(k)
+
+       if(node.nodeName!="#text")
+      {
+
+         if(node.id=="electricComponent87")
+         {
+           var cloneG=node.cloneNode(true)
+            mySVG.appendChild(cloneG)
+
+            var bb=cloneG.getBBox()
+            bbx=bb.x
+            bby=bb.y
+            bbw=bb.width
+            bbh=bb.height
+            var cx=bbx+.5*bbw
+            var cy=bby+.5*bbh
+            console.log([bbw,bbh])
+            /*
+           cloneG.setAttribute("transform","translate("+(-bbx)+","+(-bby)+")")
+            console.log(cloneG.getCTM())
+
+objTransformRequestObj = cloneG.ownerSVGElement.createSVGTransform()
+
+            //---attach new or existing transform to element, init its transform list---
+            var myTransListAnim = cloneG.transform
+            objTransList = myTransListAnim.baseVal
+
+               objTransformRequestObj.setScale(.5,.5)
+                objTransList.appendItem(objTransformRequestObj)
+                objTransList.consolidate()
+               console.log(cloneG.getAttribute("transform"))
+            */
+          break
+         }
+
+	}
+
+  }
+
+}
+
+}
+
+
+</script>
+</body>
+
+</html>
