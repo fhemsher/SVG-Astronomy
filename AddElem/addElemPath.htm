@@ -70,7 +70,7 @@ Dash[D]:<input type=checkbox id=drawPathStrokeDashCheck onClick=parent.drawPathS
 </tr>
 <tr style=background-color:linen>
 <td align=center >
-Path Zone Markers: <input title="Add markers along path" type="checkbox" id=pathZoneMarkerCheck onClick=parent.pathZoneMarkerChecked() />
+Path Markers: <input title="Add markers along path" type="checkbox" id=pathZoneMarkerCheck onClick=parent.pathZoneMarkerChecked() />
 <div id=pathZoneMarkerDiv style=visibility:hidden>
  	Marker <span id=pathZoneMarkerFillBg >Color:</span>
 		<select  onChange=parent.pathZoneMarkerFillColorSelected()  id=pathZoneMarkerFillColorSelect><option title="none" >0</option></select><br>
@@ -279,7 +279,7 @@ function sendSize()
 
 //////////////////===============path markers=============================
 
-var markerArray =["25A0", "25A3", "25A4", "25A5", "25A6", "25A7", "25A8", "25A9", "25B0",  "25B2", "25B3",   "25C6", "25C7", "25C8", "25C9",  "25CD", "25CE", "25CF", "25D0", "25D1", "25D2", "25D3",   "25D8", "25D9",  "25E7", "25E8", "25E9", "25EA", "25EB", "25EC", "25ED", "25EE",  "25FB", "25FC", "2BC1", "2BC2", "2BC3", "2BC4", "2BC5", "2BC6",    "2BCC", "2BCD", "2BCE", "2BCF", "2BD0"]
+var markerArray =["2727","2949","2217","22C7","27DF","2981","29EB","2A53","2B18","2B9D","25A0", "25A3", "25A4", "25A5", "25A6", "25A7", "25A8", "25A9", "25B0",  "25B2", "25B3",   "25C6", "25C7", "25C8", "25C9",  "25CD", "25CE", "25CF", "25D0", "25D1", "25D2", "25D3",   "25D8", "25D9",  "25E7", "25E8", "25E9", "25EA", "25EB", "25EC", "25ED", "25EE",  "25FB", "25FC", "2BC1", "2BC2", "2BC3", "2BC4", "2BC5", "2BC6",    "2BCC", "2BCD", "2BCE", "2BCF", "2BD0"]
   //marker-pattern="40 url(#myMarker)" disatnce and marker----
 function writePathMarkerOptions()
 {
