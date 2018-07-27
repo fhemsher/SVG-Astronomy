@@ -81,23 +81,23 @@ function startPathDrawEdit(elemObj, evt)
             }
 
     }
-    if(isRightMB&&ZoomDrawing==true ) //---zoom drag
+    if(isRightMB&&ZoomDrawing==true) //---zoom drag
     {
         mySVG.setAttribute("onmousedown", "startDragZoom(evt)")
         mySVG.setAttribute("onmousemove", "dragZoom(evt)")
         mySVG.setAttribute("onmouseup", "endDragZoom(evt)")
         d3.select("#mySVG").on("mousedown.zoom", null)
 
-        var dragTarget=evt.target
+        var dragTarget = evt.target
 
-        var classed=dragTarget.getAttribute("class")
+        var classed = dragTarget.getAttribute("class")
         dragTarget.setAttribute("class", "dragTargetObj")
         dragTarget.removeAttribute("onmousedown")
-        dragTarget.setAttribute("style","cursor:move")
-       dragTarget.setAttribute("opacity",.4)
+        dragTarget.setAttribute("style", "cursor:move")
+        dragTarget.setAttribute("opacity", .4)
         DrawX.style("display", "none")
 
-        ZoomDraggedElems.push([dragTarget,"startPathDrawEdit("+dragTarget.id+",evt)",classed])
+        ZoomDraggedElems.push([dragTarget, "startPathDrawEdit("+dragTarget.id+",evt)", classed])
     }
 }
 
@@ -112,6 +112,7 @@ var PathDeleted = false
 //---fired after frame loaded, via sendSize(), or cancel edit ---
 function editAddPathElem(elemObjEdit)
 {
+
     DrawPathEditId = elemObjEdit.getAttribute("id")//---used in cancel edit--
     PathDeleted = false
     DrawPathEdit = false
@@ -145,27 +146,24 @@ function editAddPathElem(elemObjEdit)
         setSelect("Path", "Fill", fill, true)
 
     }
-     cw.drawPathEditFillBg.style.background=fill
+    cw.drawPathEditFillBg.style.background = fill
     var opacity = elemObjEdit.getAttribute("fill-opacity")
 
     var opacityStroke = elemObjEdit.getAttribute("stroke-opacity")
-    for(var k=0;k<cw.drawPathEditStrokeOpacitySelect.options.length;k++)
+    for(var k = 0; k<cw.drawPathEditStrokeOpacitySelect.options.length; k++)
     {
-        var opStk=cw.drawPathEditStrokeOpacitySelect.options[k].text
+        var opStk = cw.drawPathEditStrokeOpacitySelect.options[k].text
         if(opacityStroke==opStk)
         {
-           cw.drawPathEditStrokeOpacitySelect.selectedIndex=k
-           break
+            cw.drawPathEditStrokeOpacitySelect.selectedIndex = k
+            break
         }
     }
 
-
-
     var pipe3dFilter = elemObjEdit.getAttribute("filter")
 
-
     var stroke = elemObjEdit.getAttribute("stroke")
-      cw.drawPathEditStrokeBg.style.background=stroke
+    cw.drawPathEditStrokeBg.style.background = stroke
     var strokeWidth = elemObjEdit.getAttribute("stroke-width")
     var dash = elemObjEdit.getAttribute("stroke-dasharray")
     var shadow = elemObjEdit.getAttribute("filter")
@@ -181,16 +179,14 @@ function editAddPathElem(elemObjEdit)
     if(dash)
         cw.drawPathEditStrokeDashCheck.checked = true
 
-
         if(pipe3dFilter=="url(#pipe3D)")
-        {
-          cw.drawPathEditPipe3DCheck.checked = true
-          cw.drawPathEditShadowCheck.checked = false
-          cw.drawPathEditShadowCheck.disabled = true
-        }
+    {
+        cw.drawPathEditPipe3DCheck.checked = true
+        cw.drawPathEditShadowCheck.checked = false
+        cw.drawPathEditShadowCheck.disabled = true
+    }
 
-
-        if(shadow=="url(#drop-shadow)")
+    if(shadow=="url(#drop-shadow)")
         cw.drawPathEditShadowCheck.checked = true
 
         if(arrow&&arrow!="null")
@@ -217,9 +213,9 @@ function setActivePathEdit()
 
     var cw = addElemPathEditCw
     var elemObjEdit = document.getElementById(DrawPathEditId)
-    EditPathFill=elemObjEdit.getAttribute("fill")
-    EditPathFillOpacity=elemObjEdit.getAttribute("fill-opacity")
-    EditPathStrokeOpacity=elemObjEdit.getAttribute("stroke-opacity")
+    EditPathFill = elemObjEdit.getAttribute("fill")
+    EditPathFillOpacity = elemObjEdit.getAttribute("fill-opacity")
+    EditPathStrokeOpacity = elemObjEdit.getAttribute("stroke-opacity")
 
     if(DrawPathType=="linear")
     {
@@ -270,95 +266,89 @@ function setActivePathEdit()
     activeElem = document.getElementById("activeElem")
     ActiveElem = d3.select("#activeElem")
 
+    var markers = EditObj.getAttribute("markers")
+    if(markers)
+    {
+        var unicode = EditObj.getAttribute("marker-unicode")
 
-     var markers=EditObj.getAttribute("markers")
-     if(markers)
-     {
-            var unicode=EditObj.getAttribute("marker-unicode")
+        var fill = EditObj.getAttribute("marker-fill")
+        var fontSize = EditObj.getAttribute("marker-fontsize")
+        var quantity = EditObj.getAttribute("marker-quantity")
 
-            var fill=EditObj.getAttribute("marker-fill")
-            var fontSize=EditObj.getAttribute("marker-fontsize")
-            var quantity=EditObj.getAttribute("marker-quantity")
-
-            var options=cw.pathEditZoneMarkerSelect.options
-            for(var k=0;k<options.length;k++)
+        var options = cw.pathEditZoneMarkerSelect.options
+        for(var k = 0; k<options.length; k++)
+        {
+            value = options[k].value
+            if(value==unicode)
             {
-                value=options[k].value
-                if(value==unicode)
-                {
-                    cw.pathEditZoneMarkerSelect.selectedIndex=k
-                    break
-                }
-
-            }
-            var options=cw.pathEditZoneMarkerFillColorSelect.options
-            for(var k=0;k<options.length;k++)
-            {
-                value=options[k].value
-                if(value==fill)
-                {
-                    cw.pathEditZoneMarkerFillColorSelect.selectedIndex=k
-                    break
-                }
-
-            }
-            var options=cw.pathEditZoneMarkerFontSizeSelect.options
-            for(var k=0;k<options.length;k++)
-            {
-                value=options[k].text
-                if(value==fontSize)
-                {
-                    cw.pathEditZoneMarkerFontSizeSelect.selectedIndex=k
-                    break
-                }
-
-            }
-            var options=cw.pathEditZoneMarkerQuantitySelect.options
-            for(var k=0;k<options.length;k++)
-            {
-                value=options[k].text
-                if(value==quantity)
-                {
-                    cw.pathEditZoneMarkerQuantitySelect.selectedIndex=k
-                    break
-                }
-
+                cw.pathEditZoneMarkerSelect.selectedIndex = k
+                break
             }
 
-
-             ZoneMarkerEditArray=[]
-            var myClass=DrawPathEditId
-            var zoneMarkers = document.getElementsByClassName(myClass);
-
-            for(var k=0;k<zoneMarkers.length;k++)
+        }
+        var options = cw.pathEditZoneMarkerFillColorSelect.options
+        for(var k = 0; k<options.length; k++)
+        {
+            value = options[k].value
+            if(value==fill)
             {
-                var marker=zoneMarkers[k]
-                var markerClone=marker.cloneNode(true)
-                markerClone.removeAttribute("class")
-                marker.setAttribute("display","none")
-                 ZoneMarkerEditArray.push(markerClone)
-
-
+                cw.pathEditZoneMarkerFillColorSelect.selectedIndex = k
+                break
             }
 
-            for(k=0;k<ZoneMarkerEditArray.length;k++)
+        }
+        var options = cw.pathEditZoneMarkerFontSizeSelect.options
+        for(var k = 0; k<options.length; k++)
+        {
+            value = options[k].text
+            if(value==fontSize)
             {
-
-                var myMarker=ZoneMarkerEditArray[k]
-                domActiveElemG.appendChild(myMarker)
-
+                cw.pathEditZoneMarkerFontSizeSelect.selectedIndex = k
+                break
             }
 
+        }
+        var options = cw.pathEditZoneMarkerQuantitySelect.options
+        for(var k = 0; k<options.length; k++)
+        {
+            value = options[k].text
+            if(value==quantity)
+            {
+                cw.pathEditZoneMarkerQuantitySelect.selectedIndex = k
+                break
+            }
 
-            var cw = addElemPathEditCw
-             cw.pathEditZoneMarkerCheck.checked=true
+        }
 
-            PathEditZoneMarker=true
-            cw.pathEditZoneMarkerDiv.style.visibility="visible"
+        ZoneMarkerEditArray =[]
+        var myClass = DrawPathEditId
+        var zoneMarkers = document.getElementsByClassName(myClass);
 
+        for(var k = 0; k<zoneMarkers.length; k++)
+        {
+            var marker = zoneMarkers[k]
+            var markerClone = marker.cloneNode(true)
+            markerClone.removeAttribute("class")
+            marker.setAttribute("display", "none")
+            ZoneMarkerEditArray.push(markerClone)
 
+        }
 
-     }
+        for(k = 0; k<ZoneMarkerEditArray.length; k++)
+        {
+
+            var myMarker = ZoneMarkerEditArray[k]
+            domActiveElemG.appendChild(myMarker)
+
+        }
+
+        var cw = addElemPathEditCw
+        cw.pathEditZoneMarkerCheck.checked = true
+
+        PathEditZoneMarker = true
+        cw.pathEditZoneMarkerDiv.style.visibility = "visible"
+
+    }
 
     editThisPath()
 
@@ -486,9 +476,8 @@ function editThisPath()
         {
             cw.smoothPathEditButton.innerText = "linear[S]"
 
-
-        activeElem.setAttribute("fill","none")
-        activeElem.setAttribute("fill-opacity","0")
+            activeElem.setAttribute("fill", "none")
+            activeElem.setAttribute("fill-opacity", "0")
 
             if(PathClosed==true)
             {
@@ -589,7 +578,7 @@ function clickNextPathPointEdit()
     }
 
     if(PathEditZoneMarker)
-       refreshEditMarkers()
+        refreshEditMarkers()
 }
 
 var DrawPathType = 'linear'
@@ -599,43 +588,36 @@ function drawPathEditSmoothSelected()
     var cw = addElemPathEditCw
     var currentType = DrawPathType
 
-
     var strokeWidth = cw.drawPathEditStrokeWidthSelect.options[cw.drawPathEditStrokeWidthSelect.selectedIndex].text
     var strokeColor = cw.drawPathEditStrokeSelect.options[cw.drawPathEditStrokeSelect.selectedIndex].value
     var fill = cw.drawPathEditFillSelect.options[cw.drawPathEditFillSelect.selectedIndex].value
     var fillOpacity = cw.drawPathEditOpacitySelect.options[cw.drawPathEditOpacitySelect.selectedIndex].value
     var strokeOpacity = cw.drawPathEditStrokeOpacitySelect.options[cw.drawPathEditStrokeOpacitySelect.selectedIndex].value
 
-
-
-
     if(currentType=="basis")
     {
         if(document.getElementById("drawPathEditSmooth"))
         {
 
-             if(EditPathFill.indexOf("url")!=-1&&cw.drawPathEditFillSelect.selectedIndex==0)
+            if(EditPathFill.indexOf("url")!=-1&&cw.drawPathEditFillSelect.selectedIndex==0)
             {
-                activeElem.setAttribute("fill",EditPathFill)
-                activeElem.setAttribute("fill-opacity",EditPathFillOpacity)
-             }
-             else
-             {
-                 activeElem.setAttribute("fill",fill)
-                activeElem.setAttribute("fill-opacity",fillOpacity)
-             }
-                domActiveElemG.removeChild(document.getElementById("drawPathEditSmooth"))
-                activeElem.setAttribute("stroke-opacity",strokeOpacity)
+                activeElem.setAttribute("fill", EditPathFill)
+                activeElem.setAttribute("fill-opacity", EditPathFillOpacity)
+            }
+            else
+            {
+                activeElem.setAttribute("fill", fill)
+                activeElem.setAttribute("fill-opacity", fillOpacity)
+            }
+            domActiveElemG.removeChild(document.getElementById("drawPathEditSmooth"))
+            activeElem.setAttribute("stroke-opacity", strokeOpacity)
 
-                activeElem.removeAttribute("opacity")
-
-
-
+            activeElem.removeAttribute("opacity")
 
             DrawPathType = "linear"
             cw.smoothPathEditButton.innerHTML = "smooth[S]"
             if(PathEditZoneMarker)
-        refreshEditMarkers()
+                refreshEditMarkers()
 
         }
     }
@@ -643,21 +625,20 @@ function drawPathEditSmoothSelected()
     {
         var data = PathPointArray
         var smoothPath = activeElem.cloneNode(true)
-          smoothPath.setAttribute("id", "drawPathEditSmooth")
+        smoothPath.setAttribute("id", "drawPathEditSmooth")
 
         if(EditPathFill.indexOf("url")!=-1&&cw.drawPathEditFillSelect.selectedIndex==0)
-            {
-                smoothPath.setAttribute("fill",EditPathFill)
-                smoothPath.setAttribute("fill-opacity",EditPathFillOpacity)
-             }
-             else
-             {
-                 smoothPath.setAttribute("fill",fill)
-                smoothPath.setAttribute("fill-opacity",fillOpacity)
-             }
+        {
+            smoothPath.setAttribute("fill", EditPathFill)
+            smoothPath.setAttribute("fill-opacity", EditPathFillOpacity)
+        }
+        else
+        {
+            smoothPath.setAttribute("fill", fill)
+            smoothPath.setAttribute("fill-opacity", fillOpacity)
+        }
 
-              smoothPath.setAttribute("stroke-opacity",strokeOpacity) 
-
+        smoothPath.setAttribute("stroke-opacity", strokeOpacity)
 
         domActiveElemG.insertBefore(smoothPath, activeElem)
 
@@ -671,14 +652,14 @@ function drawPathEditSmoothSelected()
         .attr('d', line);
 
         activeElem.setAttribute("stroke-opacity", '.5')
-        activeElem.setAttribute("fill","none")
+        activeElem.setAttribute("fill", "none")
 
         DrawPathType = "basis"
         if(PathEditZoneMarker)
-        refreshEditMarkers()
+            refreshEditMarkers()
 
-        cw.smoothPathEditButton.innerHTML = "linear[S]"
-        if(cw.drawPathEditStrokeDashCheck.checked==true)
+            cw.smoothPathEditButton.innerHTML = "linear[S]"
+            if(cw.drawPathEditStrokeDashCheck.checked==true)
             DrawPathEditSmooth.attr("stroke-dasharray", "8 4")
             if(cw.drawPathEditStrokeArrowCheck.checked==true)
         {
@@ -688,9 +669,9 @@ function drawPathEditSmoothSelected()
             DrawPathEditSmooth.attr("marker-end", url)
 
         }
-        if(cw.drawPathEditRightAngleCheck.checked==true )
+        if(cw.drawPathEditRightAngleCheck.checked==true)
         {
-            cw.drawPathEditRightAngleCheck.checked=false
+            cw.drawPathEditRightAngleCheck.checked = false
             activeElem.removeAttribute("rightAngle")
 
         }
@@ -706,9 +687,9 @@ function drawPathEditSmoothSelected()
     {
         ActiveElem.attr("type", DrawPathType)
         ActiveElem.attr("linearD", ActiveElem.attr("d"))
-      //  ActiveElem.attr("opacity", ".3")
+        //  ActiveElem.attr("opacity", ".3")
     }
- window.focus()
+    window.focus()
 }
 
 function showDrawPathEditStrokeBg()
@@ -730,9 +711,9 @@ function showDrawPathEditStrokeBg()
         }
         if(DrawPathType!="linear")
         DrawPathEditSmooth.attr("stroke", stroke)
- window.focus()
+        window.focus()
 
- }
+}
 var FillChange = false //----retains gradients/patterns---
 function showDrawPathEditFillBg()
 {
@@ -747,7 +728,7 @@ function showDrawPathEditFillBg()
             if(ActiveElem)
             activeElem.setAttribute("fill", fill)
 
-         if(DrawPathType!="linear")
+            if(DrawPathType!="linear")
         {
             DrawPathEditSmooth.attr("fill", fill)
             DrawPathEditSmooth.attr("fill-opacity", cw.drawPathEditOpacitySelect.options[cw.drawPathEditOpacitySelect.selectedIndex].text)
@@ -756,11 +737,11 @@ function showDrawPathEditFillBg()
         }
         else if(activeElem)
         {
-           activeElem.setAttribute("fill", fill)
+            activeElem.setAttribute("fill", fill)
             activeElem.setAttribute("fill-opacity", cw.drawPathEditOpacitySelect.options[cw.drawPathEditOpacitySelect.selectedIndex].text)
         }
         FillChange = true
- window.focus()
+        window.focus()
 }
 
 function drawPathEditStrokeSelected()
@@ -779,7 +760,7 @@ function drawPathEditStrokeSelected()
             if(DrawPathType!="linear")
             DrawPathEditSmooth.attr("marker-end", "url(#"+EndArrowId+")")
     }
- window.focus()
+    window.focus()
 
 }
 
@@ -791,7 +772,7 @@ function drawPathEditStrokeWidthSelected()
         activeElem.setAttribute("stroke-width", strokeWidth)
         if(DrawPathType!="linear")
         DrawPathEditSmooth.attr("stroke-width", strokeWidth)
- window.focus()
+        window.focus()
 }
 function drawPathEditOpacitySelected()
 {
@@ -801,7 +782,7 @@ function drawPathEditOpacitySelected()
         activeElem.setAttribute("fill-opacity", opacity)
         if(DrawPathType!="linear")
         DrawPathEditSmooth.attr("fill-opacity", opacity)
- window.focus()
+        window.focus()
 }
 function drawPathEditStrokeOpacitySelected()
 {
@@ -811,9 +792,8 @@ function drawPathEditStrokeOpacitySelected()
         activeElem.setAttribute("stroke-opacity", opacity)
         if(DrawPathType!="linear")
         DrawPathEditSmooth.attr("stroke-opacity", opacity)
- window.focus()
+        window.focus()
 }
-
 
 function drawPathEditStrokeDashChecked()
 {
@@ -830,44 +810,44 @@ function drawPathEditStrokeDashChecked()
         if(ActiveElem)
             activeElem.removeAttribute("stroke-dasharray")
             if(DrawPathType!="linear")
-            DrawPathEditSmooth.attr("stroke-dasharray",null)
+            DrawPathEditSmooth.attr("stroke-dasharray", null)
     }
- window.focus()
+    window.focus()
 }
 
 function drawPathEditPipe3DChecked()
-  {
-     var cw = addElemPathEditCw
+{
+    var cw = addElemPathEditCw
     if(cw.drawPathEditPipe3DCheck.checked==true)
     {
-          cw.drawPathEditShadowCheck.checked=false
-           cw.drawPathEditShadowCheck.disabled=true
+        cw.drawPathEditShadowCheck.checked = false
+        cw.drawPathEditShadowCheck.disabled = true
         if(ActiveElem)
         {
             activeElem.setAttribute("stroke-linejoin", "round")
             ActiveElem.attr("filter", "url(#pipe3D)")
             if(DrawPathType!="linear")
-            DrawPathEditSmooth.attr("filter", "url(#pipe3D)")
+                DrawPathEditSmooth.attr("filter", "url(#pipe3D)")
 
         }
     }
     else
-    {       cw.drawPathEditShadowCheck.disabled=false
+    {
+        cw.drawPathEditShadowCheck.disabled = false
         if(ActiveElem)
         {
-          activeElem.removeAttribute("filter")
-          activeElem.removeAttribute("stroke-linejoin")
+            activeElem.removeAttribute("filter")
+            activeElem.removeAttribute("stroke-linejoin")
 
         }
 
-            if(DrawPathType!="linear")
+        if(DrawPathType!="linear")
             drawPathEditSmooth.removeAttribute("filter")
     }
 
- window.focus()
+    window.focus()
 
-  }
-
+}
 
 function drawPathEditShadowChecked()
 {
@@ -886,7 +866,7 @@ function drawPathEditShadowChecked()
             if(DrawPathType!="linear")
             drawPathEditSmooth.removeAttribute("filter")
     }
- window.focus()
+    window.focus()
 }
 
 function drawPathEditStrokeArrowChecked()
@@ -910,7 +890,7 @@ function drawPathEditStrokeArrowChecked()
             if(DrawPathType!="linear")
             drawPathEditSmooth.removeAttribute("marker-end")
     }
- window.focus()
+    window.focus()
 }
 
 //---create and/or changes arrow id=pathArrow for this path--
@@ -975,15 +955,13 @@ function deletePath(DrawPathEditId)
     domElemG.removeChild(deleteMe)
     if(PathEditZoneMarker)
     {
-       var markers=document.getElementsByClassName(DrawPathEditId)
-        for(var k=0;k<markers.length;k++)
+        var markers = document.getElementsByClassName(DrawPathEditId)
+        for(var k = 0; k<markers.length; k++)
         {
-            marker=markers[k]
-             domElemG.removeChild(marker)
-
+            marker = markers[k]
+            domElemG.removeChild(marker)
 
         }
-
 
     }
 }
@@ -993,37 +971,32 @@ function topDrawPathEdit()
 
     finishDrawPathEdit()
     var finishedElem = document.getElementById(DrawPathEditId)
-     domElemG.appendChild(finishedElem)
+    domElemG.appendChild(finishedElem)
 
-       var markers=document.getElementsByClassName(DrawPathEditId)
-        for(var k=0;k<markers.length;k++)
-        {
-            marker=markers[k]
+    var markers = document.getElementsByClassName(DrawPathEditId)
+    for(var k = 0; k<markers.length; k++)
+    {
+        marker = markers[k]
 
-                domElemG.appendChild(marker)
+        domElemG.appendChild(marker)
 
-        }
-
-
-
-
-
+    }
 
 }
 function botDrawPathEdit()
 {
-       finishDrawPathEdit()
+    finishDrawPathEdit()
     var pathElem = document.getElementById(DrawPathEditId)
-       domElemG.insertBefore(pathElem,domElemG.firstChild)
+    domElemG.insertBefore(pathElem, domElemG.firstChild)
 
-       var markers=document.getElementsByClassName(DrawPathEditId)
-        for(var k=markers.length-1;k>=0;k--)
-        {
-            marker=markers[k].cloneNode(true)
-              domElemG.removeChild(markers[k])
-             domElemG.insertBefore(marker,pathElem)
+    var markers = document.getElementsByClassName(DrawPathEditId)
+    for(var k = markers.length-1; k>=0; k--)
+    {
+        marker = markers[k].cloneNode(true)
+        domElemG.removeChild(markers[k])
+        domElemG.insertBefore(marker, pathElem)
 
-        }
+    }
 
 }
 
@@ -1057,84 +1030,81 @@ function rotatePathAdjust(factor)
 
         }
 
+        if(PathEditZoneMarker)
+        {
+            screenPath(activeElem) //--remove transform, recalc points---
+            if(DrawPathType=="basis")
+            {
+                screenPath(drawPathEditSmooth)
+                //finishedElem.setAttribute("linearD", activeElem.getAttribute("d"))
+                var pathEditLen = drawPathEditSmooth.getTotalLength()
+                var myPath = drawPathEditSmooth
+            }
+            else
+            {
+                var pathEditLen = activeElem.getTotalLength()
+                var myPath = activeElem
+            }
 
+            var direction = -1
+            var quantity = +cw.pathEditZoneMarkerQuantitySelect.options[cw.pathEditZoneMarkerQuantitySelect.selectedIndex].text
 
-       if(PathEditZoneMarker)
-       {
-                     screenPath(activeElem) //--remove transform, recalc points---
-                     if(DrawPathType=="basis")
-                     {
-                         screenPath(drawPathEditSmooth)
-                         //finishedElem.setAttribute("linearD", activeElem.getAttribute("d"))
-                            var pathEditLen=drawPathEditSmooth.getTotalLength()
-                            var myPath=drawPathEditSmooth
-                     }
-                     else
-                     {
-                          var pathEditLen=activeElem.getTotalLength()
-                           var myPath=activeElem
-                     }
+            var seg = (pathEditLen/quantity)
+            for (var k = 0; k<ZoneMarkerEditArray.length; k++)
+            {
+                direction *= -1;
+                var segLen = k*seg
 
-                        var direction=-1
-                        var quantity=+cw.pathEditZoneMarkerQuantitySelect.options[cw.pathEditZoneMarkerQuantitySelect.selectedIndex].text
+                var p1 = myPath.getPointAtLength(segLen),
+                p2 = myPath.getPointAtLength((segLen)+direction),
+                angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
 
+                var marker = ZoneMarkerEditArray[k]
+                 
+                marker.setAttribute("transform", "translate(" + p1.x + "," + p1.y + ")rotate(" + angle + ")");
+                // marker.setAttribute("class",DrawPathEditId)
+                //domElemG.insertBefore(marker,finishedElem)
 
-                          var seg=(pathEditLen/quantity)
-                          for (var k=0;k<quantity;k++)
-                          {
-                            direction *= -1;
-                            var segLen=k*seg
-
-                            var p1 = myPath.getPointAtLength(segLen),
-                            p2 = myPath.getPointAtLength((segLen)+direction),
-                            angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
-
-                            var marker=ZoneMarkerEditArray[k]
-                            marker.setAttribute("transform", "translate(" + p1.x + "," + p1.y + ")rotate(" + angle + ")");
-                           // marker.setAttribute("class",DrawPathEditId)
-                            //domElemG.insertBefore(marker,finishedElem)
-
-                        }
+            }
 
             domActiveElemG.removeAttribute("transform")
 
-             //----rebuild---
-        PathPointArray =[]
+            //----rebuild---
+            PathPointArray =[]
 
-        var segList = activeElem.pathSegList
-        var segs = segList.numberOfItems
-        for(var k = 0; k<segs; k++)
-        {
-            var segObj = segList.getItem(k)
-
-            if(segObj.x && segObj.y)
+            var segList = activeElem.pathSegList
+            var segs = segList.numberOfItems
+            for(var k = 0; k<segs; k++)
             {
+                var segObj = segList.getItem(k)
 
-                var pnt = mySVG.createSVGPoint();
-                pnt.x = segObj.x
-                pnt.y = segObj.y
-                var sCTM = activeElem.getScreenCTM();
-                var Pnt = pnt.matrixTransform(sCTM.inverse());
+                if(segObj.x && segObj.y)
+                {
 
-                PathPointArray.push([segObj.x, segObj.y])
+                    var pnt = mySVG.createSVGPoint();
+                    pnt.x = segObj.x
+                    pnt.y = segObj.y
+                    var sCTM = activeElem.getScreenCTM();
+                    var Pnt = pnt.matrixTransform(sCTM.inverse());
+
+                    PathPointArray.push([segObj.x, segObj.y])
+
+                }
+
+            }
+            for(var k = 0; k<PathPointArray.length; k++)
+            {
+                var circle = document.getElementById("dragPnt"+k)
+                var transX = PathPointArray[k][0]
+                var transY = PathPointArray[k][1]
+
+                circle.setAttribute("transform", "translate("+transX+" "+transY+")")
 
             }
 
         }
-        for(var k = 0; k<PathPointArray.length; k++)
-        {
-            var circle = document.getElementById("dragPnt"+k)
-            var transX = PathPointArray[k][0]
-            var transY = PathPointArray[k][1]
 
-            circle.setAttribute("transform", "translate("+transX+" "+transY+")")
-
-
-       }
-
-    }
-
-       // dragDrawPathEditFinish()
+        // dragDrawPathEditFinish()
     }
 }
 
@@ -1286,5 +1256,3 @@ function dragDrawPathEditFinish()
 
     }
 }
-
-

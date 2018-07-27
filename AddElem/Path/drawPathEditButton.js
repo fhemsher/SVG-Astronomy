@@ -1,4 +1,3 @@
-
 var PathClosedEdit = false;
 var PathDecoupledEdit = false;
 var PathFinishedEdit = false;
@@ -72,23 +71,22 @@ function resetPathEdit()
             activeElem.removeAttribute("opacity")//--via smoothPath request---
             ActiveElem = null
     }
-     if(PathEditZoneMarker==true)
+    if(PathEditZoneMarker==true)
     {
         //---remove previous---
-        for(var k=0;k<ZoneMarkerEditArray.length;k++)
+        for(var k = 0; k<ZoneMarkerEditArray.length; k++)
         {
-            var marker=ZoneMarkerEditArray[k]
+            var marker = ZoneMarkerEditArray[k]
             domActiveElemG.removeChild(marker)
         }
-        cw.pathEditZoneMarkerDiv.style.visibility="hidden"
-        PathEditZoneMarker=false
+        cw.pathEditZoneMarkerDiv.style.visibility = "hidden"
+        PathEditZoneMarker = false
 
-         cw.pathEditZoneMarkerSelect.selectedIndex=0
+        cw.pathEditZoneMarkerSelect.selectedIndex = 0
 
-        ZoneMarkerEditArray=[]
-        cw.pathEditZoneMarkerCheck.checked=false
+        ZoneMarkerEditArray =[]
+        cw.pathEditZoneMarkerCheck.checked = false
     }
-
 
     var myFrame = document.getElementById('addElemPathEditFrame')
     addElemPathFrameDiv.style.height = addElemPathFrameDiv.scrollHeight+"px"
@@ -102,29 +100,29 @@ function resetPathEdit()
 function closeDrawPathEdit()
 {
     var cw = addElemPathEditCw
-   
+
     mySVG.removeAttribute("onclick")
     closeIframe("addElemPathEdit")
     FillChange = false
     DrawPathStart = false
-   DrawPathEdit = false
+    DrawPathEdit = false
     var cw = addElemPathEditCw
     var elemTimelinded = false
     if(PathEditZoneMarker==true)
     {
         //---remove previous---
-        for(var k=0;k<ZoneMarkerEditArray.length;k++)
+        for(var k = 0; k<ZoneMarkerEditArray.length; k++)
         {
-            var marker=ZoneMarkerEditArray[k]
+            var marker = ZoneMarkerEditArray[k]
             domActiveElemG.removeChild(marker)
         }
-        cw.pathEditZoneMarkerDiv.style.hidden="none"
-        PathEditZoneMarker=false
+        cw.pathEditZoneMarkerDiv.style.hidden = "none"
+        PathEditZoneMarker = false
 
-         cw.pathEditZoneMarkerSelect.selectedIndex=0
+        cw.pathEditZoneMarkerSelect.selectedIndex = 0
 
-        ZoneMarkerEditArray=[]
-        cw.pathEditZoneMarkerCheck.checked=false
+        ZoneMarkerEditArray =[]
+        cw.pathEditZoneMarkerCheck.checked = false
     }
     DragPointArray =[]
     PathPointArray =[]
@@ -187,22 +185,21 @@ function closeDrawPathEdit()
 
     }
 
-     if(PathDeleted == false)
-     {
-         var elemObjEdit = document.getElementById(DrawPathEditId)
+    if(PathDeleted == false)
+    {
+        var elemObjEdit = document.getElementById(DrawPathEditId)
         elemObjEdit.style.display = ""
 
-
-     }
-      PathDeleted=false
-   // DrawPathEditId = null
+    }
+    PathDeleted = false
+    // DrawPathEditId = null
 
     ActiveElem = null
 
-   Dragging=false
+    Dragging = false
 
-  cw.editSpan.innerHTML="Edit Path&nbsp;"
-  cw.drawPathEditDeleteButton.style.visibility="visible"
+    cw.editSpan.innerHTML = "Edit Path&nbsp;"
+    cw.drawPathEditDeleteButton.style.visibility = "visible"
     //---detach point drag to mySVG---
     mySVG.removeAttribute("onmousemove")
     mySVG.removeAttribute("onmousedown")
@@ -556,30 +553,28 @@ function reopenDrawPathEdit()
 //---button or [F]---
 function finishDrawPathEdit()
 {
-        var cw = addElemPathEditCw
-
+    var cw = addElemPathEditCw
 
     DrawPathEdit = false
     var elemObj = document.getElementById(DrawPathEditId)
 
-       var fill = cw.drawPathEditFillSelect.options[cw.drawPathEditFillSelect.selectedIndex].value
+    var fill = cw.drawPathEditFillSelect.options[cw.drawPathEditFillSelect.selectedIndex].value
     var fillOpacity = cw.drawPathEditOpacitySelect.options[cw.drawPathEditOpacitySelect.selectedIndex].value
     var strokeOpacity = cw.drawPathEditStrokeOpacitySelect.options[cw.drawPathEditStrokeOpacitySelect.selectedIndex].value
 
     var finishedElem = activeElem.cloneNode(true)
-        if(domActiveElemG.getAttribute("transform"))
-          finishedElem.setAttribute("transform",domActiveElemG.getAttribute("transform"))
-    if(EditPathFill.indexOf("url")!=-1&&cw.drawPathEditFillSelect.selectedIndex==0)
+    if(domActiveElemG.getAttribute("transform"))
+        finishedElem.setAttribute("transform", domActiveElemG.getAttribute("transform"))
+        if(EditPathFill.indexOf("url")!=-1&&cw.drawPathEditFillSelect.selectedIndex==0)
     {
-        finishedElem.setAttribute("fill",EditPathFill)
-        finishedElem.setAttribute("fill-opacity",EditPathFillOpacity)
+        finishedElem.setAttribute("fill", EditPathFill)
+        finishedElem.setAttribute("fill-opacity", EditPathFillOpacity)
     }
     else
     {
-        finishedElem.setAttribute("fill",fill)
-        finishedElem.setAttribute("fill-opacity",fillOpacity)
+        finishedElem.setAttribute("fill", fill)
+        finishedElem.setAttribute("fill-opacity", fillOpacity)
     }
-
 
     if(DrawPathType=="basis")
     {
@@ -615,94 +610,86 @@ function finishDrawPathEdit()
     UpdateThisPath = finishedElem
     domElemG.removeChild(elemObj)
 
-           if(PathEditZoneMarker)
-            {
+    if(PathEditZoneMarker)
+    {
 
-               var unicode=cw.pathEditZoneMarkerSelect.options[cw.pathEditZoneMarkerSelect.selectedIndex].value
-                var fill=  cw.pathEditZoneMarkerFillColorSelect.options[cw.pathEditZoneMarkerFillColorSelect.selectedIndex].value
-           var fontSize=+cw.pathEditZoneMarkerFontSizeSelect.options[cw.pathEditZoneMarkerFontSizeSelect.selectedIndex].text
-              var quantity=+cw.pathEditZoneMarkerQuantitySelect.options[cw.pathEditZoneMarkerQuantitySelect.selectedIndex].text
+        var unicode = cw.pathEditZoneMarkerSelect.options[cw.pathEditZoneMarkerSelect.selectedIndex].value
+        var fill = cw.pathEditZoneMarkerFillColorSelect.options[cw.pathEditZoneMarkerFillColorSelect.selectedIndex].value
+        var fontSize = +cw.pathEditZoneMarkerFontSizeSelect.options[cw.pathEditZoneMarkerFontSizeSelect.selectedIndex].text
+        var quantity = +cw.pathEditZoneMarkerQuantitySelect.options[cw.pathEditZoneMarkerQuantitySelect.selectedIndex].text
 
-            finishedElem.setAttribute("markers", "true")
-            finishedElem.setAttribute("marker-unicode", unicode)
-            finishedElem.setAttribute("marker-fill", fill)
-            finishedElem.setAttribute("marker-fontsize", fontSize)
-            finishedElem.setAttribute("marker-quantity", quantity)
+        finishedElem.setAttribute("markers", "true")
+        finishedElem.setAttribute("marker-unicode", unicode)
+        finishedElem.setAttribute("marker-fill", fill)
+        finishedElem.setAttribute("marker-fontsize", fontSize)
+        finishedElem.setAttribute("marker-quantity", quantity)
 
-                var oldMarkers=document.getElementsByClassName(DrawPathEditId)
-                for(var k=oldMarkers.length-1;k>=0;k--)
-                {
-                    var oldMarker=oldMarkers[k]
-                  domElemG.removeChild(oldMarker)
-                }
-
-                     screenPath(finishedElem) //--remove transform, recalc points---
-                     if(DrawPathType=="basis")
-                     {
-                         screenPath(activeElem)
-                         finishedElem.setAttribute("linearD", activeElem.getAttribute("d"))
-                     }
-                        var direction=-1
-
-                       var pathEditLen=finishedElem.getTotalLength()
-
-                          var seg=(pathEditLen/quantity)
-                          for (var k=0;k<quantity;k++)
-                          {
-                            direction *= -1;
-                            var segLen=k*seg
-
-                            var p1 = finishedElem.getPointAtLength(segLen),
-                            p2 = finishedElem.getPointAtLength((segLen)+direction),
-                            angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
-
-                            var marker=ZoneMarkerEditArray[k]
-                            marker.setAttribute("transform", "translate(" + p1.x + "," + p1.y + ")rotate(" + angle + ")");
-                            marker.setAttribute("class",DrawPathEditId)
-                            domElemG.insertBefore(marker,finishedElem)
-
-                        }
-
-               ZoneMarkerEditArray=[]
-              PathEditZoneMarker=false
-              cw.pathEditZoneMarkerCheck.checked=false
-
-
-
-
-
-
-            }
-            else
-            {
-                var dumpMarkers=document.getElementsByClassName(DrawPathEditId)
-                 for(var k=0;k<dumpMarkers.length;k++)
-                 {
-                     var dump=dumpMarkers[k]
-                     domElemG.removeChild(dump)
-
-
-                 }
-                 finishedElem.removeAttribute("markers")
-                finishedElem.removeAttribute("marker-unicode")
-                finishedElem.removeAttribute("marker-fill")
-                finishedElem.removeAttribute("marker-fontsize")
-                finishedElem.removeAttribute("marker-quantity")
-
-
-            }
-         domActiveElemG.removeAttribute("transform")
-
-       screenPath(finishedElem)
-        if(DrawPathType=="basis")
+        var oldMarkers = document.getElementsByClassName(DrawPathEditId)
+        for(var k = oldMarkers.length-1; k>=0; k--)
         {
-
-        finishedElem.setAttribute("linearD", activeElem.getAttribute("d"))
+            var oldMarker = oldMarkers[k]
+            domElemG.removeChild(oldMarker)
         }
 
-  domActiveElemG.removeChild(activeElem)
-    activeElem = null
+        screenPath(finishedElem) //--remove transform, recalc points---
+        if(DrawPathType=="basis")
+        {
+            screenPath(activeElem)
+            finishedElem.setAttribute("linearD", activeElem.getAttribute("d"))
+        }
+        var direction = -1
 
+        var pathEditLen = finishedElem.getTotalLength()
+
+        var seg = (pathEditLen/quantity)
+        for (var k = 0; k<ZoneMarkerEditArray.length; k++)
+        {
+            direction *= -1;
+            var segLen = k*seg
+
+            var p1 = finishedElem.getPointAtLength(segLen),
+            p2 = finishedElem.getPointAtLength((segLen)+direction),
+            angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+
+            var marker = ZoneMarkerEditArray[k]
+            marker.setAttribute("transform", "translate(" + p1.x + "," + p1.y + ")rotate(" + angle + ")");
+            marker.setAttribute("class", DrawPathEditId)
+            domElemG.insertBefore(marker, finishedElem)
+
+        }
+
+        ZoneMarkerEditArray =[]
+        PathEditZoneMarker = false
+        cw.pathEditZoneMarkerCheck.checked = false
+
+    }
+    else
+    {
+        var dumpMarkers = document.getElementsByClassName(DrawPathEditId)
+        for(var k = 0; k<dumpMarkers.length; k++)
+        {
+            var dump = dumpMarkers[k]
+            domElemG.removeChild(dump)
+
+        }
+        finishedElem.removeAttribute("markers")
+        finishedElem.removeAttribute("marker-unicode")
+        finishedElem.removeAttribute("marker-fill")
+        finishedElem.removeAttribute("marker-fontsize")
+        finishedElem.removeAttribute("marker-quantity")
+
+    }
+    domActiveElemG.removeAttribute("transform")
+
+    screenPath(finishedElem)
+    if(DrawPathType=="basis")
+    {
+
+        finishedElem.setAttribute("linearD", activeElem.getAttribute("d"))
+    }
+
+    domActiveElemG.removeChild(activeElem)
+    activeElem = null
 
     closeDrawPathEdit()
 
