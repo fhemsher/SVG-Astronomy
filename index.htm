@@ -78,9 +78,9 @@ onmousedown="return false;"
 <div id=addElemRectFrameDiv style='padding:10px;border-radius:10px;position:fixed;visibility:hidden;width:1px;height:1px;overflow:hidden'><iframe id=addElemRectFrame style='border-width:0px;height:1px;overflow:hidden;'   scrolling='no' frameborder='0'   ></iframe></div>
 	<script charset="UTF-8" type="text/javascript" src="AddElem/Rect/drawRect.js"></script>
     <script charset="UTF-8" type="text/javascript" src="js03_drag/dragObjRect.js"></script>
-<div id=addElemBGimageFrameDiv style='padding:10px;border-radius:10px;position:fixed;visibility:hidden;width:1px;height:1px;overflow:hidden'><iframe id=addElemBGimageFrame style='border-width:0px;height:1px;overflow:hidden;'   scrolling='no' frameborder='0'   ></iframe></div>
-	<script charset="UTF-8" type="text/javascript" src="AddElem/BGimage/drawBGimage.js"></script>
-    <script charset="UTF-8" type="text/javascript" src="js03_drag/dragObjBGimage.js"></script>
+<div id=addElemBGImageFrameDiv style='padding:10px;border-radius:10px;position:fixed;visibility:hidden;width:1px;height:1px;overflow:hidden'><iframe id=addElemBGImageFrame style='border-width:0px;height:1px;overflow:hidden;'   scrolling='no' frameborder='0'   ></iframe></div>
+	<script charset="UTF-8" type="text/javascript" src="AddElem/BGImage/drawBGImage.js"></script>
+    <script charset="UTF-8" type="text/javascript" src="js03_drag/dragObjBGImage.js"></script>
 <div id=addElemImageFrameDiv style='padding:10px;border-radius:10px;position:fixed;visibility:hidden;width:1px;height:1px;overflow:hidden'><iframe id=addElemImageFrame style='border-width:0px;height:1px;overflow:hidden;'   scrolling='no' frameborder='0'   ></iframe></div>
 	<script charset="UTF-8" type="text/javascript" src="AddElem/Image/drawImage.js"></script>
     <script charset="UTF-8" type="text/javascript" src="js03_drag/dragObjImage.js"></script>
@@ -217,8 +217,11 @@ stroke-width: 0;
   <div id=svgSourceDiv style=display:none;overflow:auto;width:1200px;text-align:left; /></div>
 
 
-
 <p></p>
+ <div style='width:100%;text-align:right' >Download SVG-Astronomy .zip file <a href="https://github.com/fhemsher/SVG-Astronomy"  target="_blank">SVG-Astronomy.com Files</a></div>
+
+
+
 <div id=emDiv style='width:100%;text-align:right' ></div><p></p>
 
 </center>
@@ -346,7 +349,7 @@ You may adjust the size of the chart via the Scale slider.
              &nbsp;&nbsp;
             <button title="Create a schematic" onmouseover=this.style.borderColor="lime" onmouseout=this.style.borderColor=''  id=openAddSchematicButton   style=background-color:#E0CAEA onClick=openAddSchematicDraw();startSchematicDraw()   ><i>Schematics</i></button>
              &nbsp;&nbsp;
-            <button title="Import image from your computer as background template" onmouseover=this.style.borderColor="lime" onmouseout=this.style.borderColor=''  id=openAddBGimageButton   style=background-color:ghostwhite onClick=openAddBGimage()   >Template Image</button>
+            <button title="Import image from your computer as background template" onmouseover=this.style.borderColor="lime" onmouseout=this.style.borderColor=''  id=openAddBGImageButton   style=background-color:ghostwhite onClick=openAddBGImage()   >Template Image</button>
   </div>
 </center>
 
@@ -554,9 +557,11 @@ function writeEM()
     em+="gm"
     em+="ail."
     em+="com"
-   emDiv.innerHTML=em +" &nbsp;&nbsp;<span style=color:maroon>Last Update: 7/21/2018</span>"
+   emDiv.innerHTML=em +" &nbsp;&nbsp;<span style=color:maroon>Last Update: 8/07/2018</span>"
 
 }
+
+
 </script>
 
 
