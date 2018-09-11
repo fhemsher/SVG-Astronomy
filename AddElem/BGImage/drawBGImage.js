@@ -455,7 +455,20 @@ function cancelEditBGImage()
  closeDrawBGImage()
 
 }
+function rotateBGImageAdjust(factor)
+{
+    var cw = addElemBGImageCw
+    var mult = parseFloat(cw.rotateDrawBGImageAdjustSelect.options[cw.rotateDrawBGImageAdjustSelect.selectedIndex].text)
+    var rotateAdd = parseFloat(factor)*mult
 
+    cw.adjustedRotateBGImageValue.value = rotateAdd+parseFloat(cw.adjustedRotateBGImageValue.value)
+
+    if(ActiveElem)
+    {
+        rote("activeElem", rotateAdd)
+        rote("domDrawX", rotateAdd)
+    }
+}
 
 //=======================delete rect==================
 var BGImageDeleted = false
