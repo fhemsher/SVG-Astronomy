@@ -13,15 +13,11 @@ function startDragImage(evt)
 
     if(activeElem&&!DraggingObj&&addElemImageViz==true) //---prevents dragging conflicts on other draggable elements---
     {
-        if(evt.target.parentNode.getAttribute("id")=="activeElem" || evt.target.getAttribute("id")=="dragDot")
+        if(evt.target.getAttribute("id")=="activeElem" || evt.target.getAttribute("id")=="imgDragArrow")
         {
 
-            //if(evt.target.parentNode.getAttribute("class")=="dragTargetObj") //---g--
-
-          if(evt.target.getAttribute("id")=="dragDot")
+          if(evt.target.getAttribute("class")=="dragTargetObj")//---all other elems--
                 objDragTarget = evt.target
-           else if(evt.target.parentNode.getAttribute("id")=="activeElem")
-                objDragTarget = evt.target.parentNode
 
         }
         if(objDragTarget)
@@ -61,13 +57,13 @@ function startDragImage(evt)
 
             DraggingObj = true
 
-            if(objDragTarget.getAttribute("id")=="dragDot")
+            if(objDragTarget.getAttribute("id")=="imgDragArrow")
             {
                     var cw = addElemImageCw
-                var w = +activeElem.firstChild.getAttribute("width")
-                var h = +activeElem.firstChild.getAttribute("height")
-                cw.bgImageWidthValue.value = w.toFixed(0)
-                cw.bgImageHeightValue.value = h.toFixed(0)
+                var w = +activeElem.getAttribute("width")
+                var h = +activeElem.getAttribute("height")
+                cw.imageWidthValue.value = w.toFixed(0)
+                cw.imageHeightValue.value = h.toFixed(0)
 
 
             }
@@ -95,47 +91,67 @@ function dragImage(evt)
         Pnt.x -= ObjStartX;
         Pnt.y -= ObjStartY;
 
-        if(objDragTarget.getAttribute("id")=="dragDot")
+         if(objDragTarget.getAttribute("id")=="imgDragArrow" &&(DrawImage==true||EditImage==true))
         {
-            var width = Pnt.x +parseFloat(activeElem.firstChild.getAttribute("width"))
-            var height = Pnt.y +parseFloat(activeElem.firstChild.getAttribute("height"))
+            var width = parseFloat(ActiveElem.attr("width"))
+            width= (Pnt.x+width)
+            var height = parseFloat(ActiveElem.attr("height"))
+            height = (Pnt.y+height)
+
+            if(width>0&&height>0)
+            {
+
+                ActiveElem.attr("width", width)
+                ActiveElem.attr("height", height)
+
+                //---rescale radius to current scale----
 
                 objTransformRequestObj.setTranslate(Pnt.x, Pnt.y)
                 objTransList.appendItem(objTransformRequestObj)
                 objTransList.consolidate()
 
-                activeElem.firstChild.setAttribute("width", width)
-                 activeElem.firstChild.setAttribute("height", height)
+                var matrix = imgDragArrow.transform.baseVal.consolidate().matrix;
 
-                var cw = addElemImageCw
+                var transX = matrix.e
+                var transY = matrix.f
+
+                imgDragArrow.setAttribute("transform", "translate("+(transX)+" "+transY+")")
+
+                                    var cw = addElemImageCw
+
+                cw.imageWidthValue.value = width.toFixed(0)
+                cw.imageHeightValue.value = height.toFixed(0)
 
 
-                var w = +activeElem.firstChild.getAttribute("width")
-                var h = +activeElem.firstChild.getAttribute("height")
-                 cw.bgImageWidthValue.value = w.toFixed(0)
-                cw.bgImageHeightValue.value = h.toFixed(0)
 
 
+            }
 
         }
+
         else if (objDragTarget.getAttribute("id")=="activeElem")
         {
-            objTransformRequestObj.setTranslate(Pnt.x, Pnt.y)
-            objTransList.appendItem(objTransformRequestObj)
-            objTransList.consolidate()
-            DrawX.attr("transform", ActiveElem.attr("transform"))
-            /*
-            var width =+activeElem.firstChild.getAttribute("width")
-            var height = +activeElem.firstChild.getAttribute("height")
-           var tfmObj= decomposeMatrix(activeElem.getCTM())
-            var tfmX=tfmObj.translateX+width
-            var tfmY=tfmObj.translateY+height
-            DragDot.attr("transform", "translate("+(tfmX)+" "+(tfmY)+")")
-            */
+            var transformRequest = activeElem.ownerSVGElement.createSVGTransform()
+            //---attach new or existing transform to element, init its transform list---
+            var myTransListAnim = activeElem.transform
+            var transList = myTransListAnim.baseVal
+
+            transformRequest.setTranslate(Pnt.x, Pnt.y)
+            transList.appendItem(transformRequest)
+            transList.consolidate()
+
+            var transformRequest = activeElem.ownerSVGElement.createSVGTransform()
+            //---attach new or existing transform to element, init its transform list---
+            var myTransListAnim = imgDragArrow.transform
+            var transList = myTransListAnim.baseVal
+
+            transformRequest.setTranslate(Pnt.x, Pnt.y)
+            transList.appendItem(transformRequest)
+            transList.consolidate()
         }
 
-        //if(ActiveElem)
-        //DrawX.attr("transform",ActiveElem.attr("transform"))
+        if(ActiveElem)
+        DrawX.attr("transform",ActiveElem.attr("transform"))
 
     }
 }
