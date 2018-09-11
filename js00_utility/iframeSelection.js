@@ -9,10 +9,10 @@ function disableAllButtons()
     openAddArcButton.disabled=true
     openAddIconButton.disabled=true
     openAddImageButton.disabled=true
+    openAddBGImageButton.disabled=true
 
     openAddEllipseButton.disabled=true
     openAddRectButton.disabled=true
-    openAddBGimageButton.disabled=true
     openAddTextButton.disabled=true
     openAddPathButton.disabled=true
     openAddPgonButton.disabled=true
@@ -38,10 +38,11 @@ function enableAllButtons()
     openAddArcButton.disabled=false
     openAddIconButton.disabled=false
     openAddImageButton.disabled=false
+    openAddBGImageButton.disabled=false
 
     openAddEllipseButton.disabled=false
     openAddRectButton.disabled=false
-    openAddBGimageButton.disabled=false
+
     openAddTextButton.disabled=false
     openAddPathButton.disabled=false
     openAddPgonButton.disabled=false
@@ -62,10 +63,10 @@ function enableAllButtons()
     openAddArcButton.style.borderColor=""
     openAddIconButton.style.borderColor=""
     openAddImageButton.style.borderColor=""
+    openAddBGImageButton.style.borderColor=""
 
     openAddEllipseButton.style.borderColor=""
     openAddRectButton.style.borderColor=""
-    openAddBGimageButton.style.borderColor=""
 
 
 
@@ -178,6 +179,22 @@ function openAddImageDraw()
 
 }
 
+function openAddBGImageDraw()
+{
+   if(addElemBGImageLoad==true)
+       startBGImageDraw()
+    if(document.getElementById(DrawBGImageEditId))
+    {   var cw = addElemBGImageCw
+        cw.editTemplateCheckDiv.style.visibility="visible"
+
+
+    }
+
+        openIframe("AddElem", "addElemBGImage", 0)
+       // mySVG.setAttribute("onclick", "plantPgonSymbol(event)")
+
+        openAddBGImageButton.style.borderStyle = "inset"
+}
 
 function openAddTexture()
 {
@@ -191,21 +208,21 @@ function openAddTexture()
 }
 
 
-function openAddBGimage()
+function openAddBGImage()
 {
-   if(addElemBGimageLoad==true)
-       startBGimageDraw()
-    if(document.getElementById(DrawBGimageEditId))
-    {   var cw = addElemBGimageCw
+   if(addElemBGImageLoad==true)
+       startBGImageDraw()
+    if(document.getElementById(DrawBGImageEditId))
+    {   var cw = addElemBGImageCw
         cw.editTemplateCheckDiv.style.visibility="visible"
 
 
     }
 
-        openIframe("AddElem", "addElemBGimage", 0)
+        openIframe("AddElem", "addElemBGImage", 0)
        // mySVG.setAttribute("onclick", "plantPgonSymbol(event)")
 
-        openAddBGimageButton.style.borderStyle = "inset"
+        openAddBGImageButton.style.borderStyle = "inset"
 }
 
 function openAddGradient()
@@ -326,6 +343,7 @@ function isAddElemOpen() //---called from iframeSelection.js---
     if(addElemChartViz==true)AddElemOpen = true;
     if(addElemIconViz==true)AddElemOpen = true;
     if(addElemImageViz==true)AddElemOpen = true;
+    if(addElemBGImageViz==true)AddElemOpen = true;
 
     if(addElemEllipseViz==true)AddElemOpen = true;
     if(addElemRectViz==true)AddElemOpen = true;
@@ -415,10 +433,10 @@ function closeIframe(name)
     openAddChartButton.style.borderStyle = ""
     openAddIconButton.style.borderStyle = ""
     openAddImageButton.style.borderStyle = ""
+    openAddBGImageButton.style.borderStyle = ""
 
     openAddEllipseButton.style.borderStyle = ""
     openAddRectButton.style.borderStyle = ""
-    openAddBGimageButton.style.borderStyle = ""
     openAddTextButton.style.borderStyle = ""
     openAddPathButton.style.borderStyle = ""
     openAddPgonButton.style.borderStyle = ""
@@ -470,11 +488,11 @@ function closeAllFrames()
          openAddSchematicButton.style.borderStyle = ""
          openAddIconButton.style.borderStyle = ""
          openAddImageButton.style.borderStyle = ""
+         openAddBGImageButton.style.borderStyle = ""
 
 
    openAddEllipseButton.style.borderStyle = ""
     openAddRectButton.style.borderStyle = ""
-    openAddBGimageButton.style.borderStyle = ""
     openAddTextButton.style.borderStyle = ""
     openAddPathButton.style.borderStyle = ""
     openAddPgonButton.style.borderStyle = ""
@@ -541,6 +559,7 @@ var addElemChartLoad = false
 var addElemArcLoad = false
 var addElemIconLoad = false
 var addElemImageLoad = false
+var addElemBGImageLoad = false
 var addElemPgonLoad = false
 var addElemPolygonLoad = false
 var addElemTextureLoad = false
@@ -548,7 +567,6 @@ var addElemGradientLoad = false
 var addElemPgonEditLoad = false
 var addElemEllipseLoad = false
 var addElemRectLoad = false
-var addElemBGimageLoad = false
 var addElemTextLoad = false
 var addElemPathLoad = false
 var addElemPathEditLoad = false
@@ -566,6 +584,7 @@ var editElemSchematicViz = false
 
 var addElemIconViz = false
 var addElemImageViz = false
+var addElemBGImageViz = false
 var addElemPgonViz = false
 var addElemPolygonViz = false
 var addElemTextureViz = false
@@ -573,7 +592,6 @@ var addElemGradientViz = false
 var addElemPgonEditViz = false
 var addElemEllipseViz = false
 var addElemRectViz = false
-var addElemBGimageViz = false
 var addElemTextViz = false
 var addElemPathViz = false
 var addElemPathEditViz = false
@@ -588,6 +606,7 @@ var addElemSchematicCw
 var editElemSchematicCw
 var addElemIconCw
 var addElemImageCw
+var addElemBGImageCw
 
 var addElemPgonCw
 var addElemPolygonCw
@@ -598,7 +617,6 @@ var addElemGradientCw
 var addElemPgonEditCw
 var addElemEllipseCw
 var addElemRectCw
-var addElemBGimageCw
 var addElemTextCw
 var addElemPathCw
 var addElemPathEditCw
@@ -626,7 +644,7 @@ iframeNameArray[12] = 'addElemComponent'
 iframeNameArray[13] = 'editElemComponent'
 iframeNameArray[14] = 'addElemSchematic'
 iframeNameArray[15] = 'editElemSchematic'
-iframeNameArray[16] = 'addElemBGimage'
+iframeNameArray[16] = 'addElemBGImage'
 iframeNameArray[17] = 'addElemArc'
 
 iframeNameArray[18] = 'addElemImage'
