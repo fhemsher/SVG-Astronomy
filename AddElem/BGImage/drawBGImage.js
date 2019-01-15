@@ -84,15 +84,33 @@ function loadBGImageFile()
             ImageHREF = reader.result
              var image = new Image();
             image.src = reader.result;
-            image.onload = function() {
+            image.onload = function()
+            {
 
-                BGImageWidth=image.naturalWidth
-                BGImageHeight=image.naturalHeight
-                cw.bgImageWidthValue.value = BGImageWidth
-                cw.bgImageHeightValue.value = BGImageHeight
+                var initWidth=image.naturalWidth
+                var initHeight=image.naturalHeight
+                if(initWidth>600||initHeight>600)
+                {
+                 if(initWidth>=initHeight)
+                    var maxSize=initWidth
+                    else
+                    var maxSize=initHeight
+
+                     var sizeRatio=600/maxSize
+                    BGImageWidth=initWidth*sizeRatio
+                    BGImageHeight=initHeight*sizeRatio
+
+                }
+                else
+                {
+                    BGImageWidth=image.naturalWidth
+                    BGImageHeight=image.naturalHeight
+                }
+
+
+                cw.bgImageWidthValue.value = BGImageWidth.toFixed(0)
+                cw.bgIimageHeightValue.value = BGImageHeight.toFixed(0)
             }
-
-
         }
         , false);
 
@@ -102,8 +120,6 @@ function loadBGImageFile()
 
     }
 }
-
-
 
 
 
